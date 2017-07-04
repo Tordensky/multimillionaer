@@ -11,9 +11,6 @@ class App extends Component {
   render() {
     return (
       <AppContainer>
-          <h1>Hello world, {this.props.counter}</h1>
-          <button onClick={this.props.increment}>+</button>
-          <button onClick={this.props.deincrement}>-</button>
           <Board/>
       </AppContainer>
     );
@@ -22,19 +19,11 @@ class App extends Component {
 
 function mapStateToProps(state) {
     return {
-        counter: state.counter,
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        increment() {
-            dispatch({ type: 'INC' });
-        },
-
-        deincrement() {
-            dispatch({ type: 'DEC' });
-        }
     }
 }
 
