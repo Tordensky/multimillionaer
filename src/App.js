@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import { Board } from './components/index';
 
 
 const AppContainer = styled.div`
-    color: pink;
 `;
 
 class App extends Component {
@@ -14,6 +14,7 @@ class App extends Component {
           <h1>Hello world, {this.props.counter}</h1>
           <button onClick={this.props.increment}>+</button>
           <button onClick={this.props.deincrement}>-</button>
+          <Board/>
       </AppContainer>
     );
   }
@@ -21,7 +22,7 @@ class App extends Component {
 
 function mapStateToProps(state) {
     return {
-        counter: state,
+        counter: state.counter,
     }
 }
 
