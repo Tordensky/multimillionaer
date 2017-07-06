@@ -24,7 +24,7 @@ const PlayerInfo = styled.div`
 
 const data = [
     {
-        playerId: 'red',
+        playerID: 'p1',
         stocks: [
             {
                 stockID: 'a',
@@ -79,7 +79,7 @@ const data = [
         ]
     },
     {
-        playerId: 'blue',
+        playerID: 'p2',
         stocks: [
             {
                 stockID: 'a',
@@ -134,7 +134,7 @@ const data = [
         ]
     },
     {
-        playerId: 'blue',
+        playerID: 'p3',
         stocks: [
             {
                 stockID: 'a',
@@ -189,7 +189,7 @@ const data = [
         ]
     },
     {
-        playerId: 'blue',
+        playerID: 'p4',
         stocks: [
             {
                 stockID: 'a',
@@ -244,7 +244,7 @@ const data = [
         ]
     },
     {
-        playerId: 'blue',
+        playerID: 'p5',
         stocks: [
             {
                 stockID: 'a',
@@ -299,7 +299,7 @@ const data = [
         ]
     },
     {
-        playerId: 'blue',
+        playerID: 'p6',
         stocks: [
             {
                 stockID: 'a',
@@ -357,12 +357,12 @@ const data = [
 ];
 
 function Player({ data }) {
-    const stocks = data.stocks.map(stockData => <Stock data={stockData} />);
+    const stocks = data.stocks.map(stockData => <Stock key={stockData.stockID} data={stockData} />);
 
     return (
         <PlayerContainer>
             <PlayerInfo>
-                {data.playerId}
+                {data.playerID}
             </PlayerInfo>
             {stocks}
         </PlayerContainer>
@@ -377,7 +377,7 @@ export class Board extends PureComponent {
 
     renderPlayers() {
         // todo from props
-        return data.map(playerData => <Player data={playerData}/>);
+        return data.map(playerData => <Player key={playerData.playerID} data={playerData}/>);
     }
 
     render() {
