@@ -9,7 +9,7 @@ const StockContainer = styled.div`
     border: solid black 1px;
 `;
 
-const StockName = styled.div`
+const StockCount = styled.div`
     font-size: 16px;
     text-align: center;
 `;
@@ -36,9 +36,9 @@ export class Stock extends PureComponent {
         const { data } = this.props;
         return (
             <StockContainer >
-                <StockBackground style={{ backgroundColor: data.color }}/>
-                <StockName>{data.stockID}</StockName>
-                <StockValue>{data.count}</StockValue>
+                <StockBackground style={{ backgroundColor: data.get('color') }}/>
+                <StockCount>{data.get('count')}</StockCount>
+                <StockValue>{data.get('value')}</StockValue>
             </StockContainer>
         );
     }
