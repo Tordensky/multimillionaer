@@ -59,7 +59,7 @@ function Stocks({ data }) {
             <StockInfo>Aksjer</StockInfo>
             {data.map(stock =>
                 <MainStockContainer key={stock.get('id')}>
-                    <div>>{stock.name}</div>
+                    <div>{stock.name}</div>
                     <div>{stock.getValue()}</div>
                     <div>{stock.available}</div>
                 </MainStockContainer>)}

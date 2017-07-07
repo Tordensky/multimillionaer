@@ -10,12 +10,12 @@ const StockContainer = styled.div`
 `;
 
 const StockCount = styled.div`
-    font-size: 16px;
+    font-size: 20px;
     text-align: center;
 `;
 
 const StockValue = styled.div`
-    font-size: 20px;
+    font-size: 14px;
     text-align: center;
 `;
 
@@ -37,8 +37,8 @@ export class Stock extends PureComponent {
         return (
             <StockContainer >
                 <StockBackground style={{ backgroundColor: data.get('color') }}/>
-                <StockCount>{data.get('count')}</StockCount>
-                <StockValue>{data.get('value')}</StockValue>
+                <StockCount>{data.get('count') * 10}%</StockCount>
+                <StockValue>{data.get('value')} kr</StockValue>
             </StockContainer>
         );
     }
