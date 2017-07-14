@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
+import { formaterKroner } from '../util/index';
 
 const StockContainer = styled.div`
     position: relative;
@@ -50,10 +51,10 @@ export class PlayerStock extends PureComponent {
             <StockContainer style={{ borderColor: data.get('color') }}>
                 <StockBackground style={{ backgroundColor: data.get('color'), opacity: data.get('count') / 10 }}/>
                 <StockCount>{data.get('count') * 10}%</StockCount>
-                <StockValue>{data.get('value')} kr</StockValue>
+                <StockValue>{formaterKroner(data.get('value', 0))} kr</StockValue>
                 <div>
-                    <button onClick={this.buyStock}>Buy</button>
-                    <button onClick={this.sellStock}>Sell</button>
+                    <button onClick={this.buyStock}>Kjøp</button>
+                    <button onClick={this.sellStock}>Selg</button>
                 </div>
             </StockContainer>
         );

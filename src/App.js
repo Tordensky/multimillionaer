@@ -8,9 +8,16 @@ import { changeMainStockValues, stockTransaction } from './actions/index';
 const AppContainer = styled.div`
 `;
 
+function Historikk({ historikk }) {
+    const h = historikk.map((h, idx) => <div key={idx}>{`${h.toId} kjøper ${h.count} aksje av type ${h.stockID} fra ${h.fromId}`}</div>);
+    return (
+        <div>{h}</div>
+    );
+}
+
 class App extends Component {
     render() {
-        const { stocks, players, onChangeStockPrice, onStockTransaction } = this.props;
+        const { stocks, players, historikk, onChangeStockPrice, onStockTransaction } = this.props;
 
         return (
             <AppContainer>
@@ -20,6 +27,7 @@ class App extends Component {
                     onChangeStockPrice={onChangeStockPrice}
                     onStockTransaction={onStockTransaction}
                 />
+                <Historikk historikk={historikk} />
             </AppContainer>
         );
     }
@@ -29,6 +37,7 @@ function mapStateToProps(state) {
     return {
         stocks: state.stocks,
         players: state.players.map(p => p.viewModel(state.stocks)),
+        historikk: state.historikk,
     }
 }
 

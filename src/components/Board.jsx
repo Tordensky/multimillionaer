@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import { PlayerStock } from './PlayerStock';
 import { StockTransactionRecord } from '../actions/index';
+import { formaterKroner } from '../util/index';
 
 const BoardContainer = styled.div`
     width: 100vw;
@@ -106,12 +107,12 @@ class MainStock extends PureComponent {
         return (
             <MainStockContainer key={stock.get('id')} style={{ backgroundColor: stock.color }}>
                 <div>{stock.name}</div>
-                <div>Value: {stock.getValue()}</div>
-                <div>Available: {stock.available * 10}%</div>
-                <div>Level: {stock.level}</div>
+                <div>Pris: {formaterKroner(stock.getValue())} kr</div>
+                <div>Til salgs: {stock.available * 10}%</div>
+                <div>Kursnivå: {stock.level}</div>
                 <div>
-                    <button onClick={this.onPriceUp}>UP</button>
-                    <button onClick={this.onPriceDown}>DOWN</button>
+                    <button onClick={this.onPriceUp}>Øk aksjekurs</button>
+                    <button onClick={this.onPriceDown}>Senk aksjekurs</button>
                 </div>
             </MainStockContainer>
         );
