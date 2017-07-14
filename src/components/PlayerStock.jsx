@@ -47,8 +47,8 @@ export class PlayerStock extends PureComponent {
     render() {
         const { data } = this.props;
         return (
-            <StockContainer >
-                <StockBackground style={{ backgroundColor: data.get('color') }}/>
+            <StockContainer style={{ borderColor: data.get('color') }}>
+                <StockBackground style={{ backgroundColor: data.get('color'), opacity: data.get('count') / 10 }}/>
                 <StockCount>{data.get('count') * 10}%</StockCount>
                 <StockValue>{data.get('value')} kr</StockValue>
                 <div>

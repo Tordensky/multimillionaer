@@ -21,7 +21,7 @@ const PlayerInfo = styled.div`
     border: solid black 1px;
 `;
 
-const StockContainer = styled.div`
+const MainStocksContainer = styled.div`
     display: flex;
     justify-content: space-between;
 `;
@@ -77,11 +77,11 @@ class MainStocks extends PureComponent {
     render() {
         const { data, onChangeStockPrice } = this.props;
         return (
-            <StockContainer>
+            <MainStocksContainer>
                 <StockInfo>Aksjer</StockInfo>
                 {data.map(stock => <MainStock key={stock.get('id')} stock={stock}
                                               onChangeStockPrice={onChangeStockPrice} />)}
-            </StockContainer>
+            </MainStocksContainer>
         );
     }
 }
@@ -104,7 +104,7 @@ class MainStock extends PureComponent {
     render() {
         const { stock } = this.props;
         return (
-            <MainStockContainer key={stock.get('id')}>
+            <MainStockContainer key={stock.get('id')} style={{ backgroundColor: stock.color }}>
                 <div>{stock.name}</div>
                 <div>Value: {stock.getValue()}</div>
                 <div>Available: {stock.available * 10}%</div>
