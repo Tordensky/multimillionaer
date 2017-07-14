@@ -1,4 +1,5 @@
 import { Map, OrderedMap, Record } from 'immutable';
+import { CHANGE_MAIN_STOCK_VALUES, STOCK_TRANSACTION } from '../actions/index';
 
 class StockRecord extends Record(
     {
@@ -15,6 +16,14 @@ class StockRecord extends Record(
 
     calculateStockValue(numStocks) {
         return this.getValue() * numStocks;
+    }
+
+    levelUp() {
+        return this.update('level', l => (l < StockPrice.length) ? l + 1 : l);
+    }
+
+    levelDown() {
+        return this.update('level', l => (l > 0) ? l - 1 : l); //this.update('level', l => l > 0 ? l + 1 : l);
     }
 }
 
@@ -132,6 +141,29 @@ export const StocksInitialState = OrderedMap({
 const defualtState = StocksInitialState;
 export function stockReducer(state = defualtState, action) {
     switch (action.type) {
+    case CHANGE_MAIN_STOCK_VALUES:
+        return state.withMutations(s => {
+            action.payload.forEach(stock => {
+               s = s.set(stock.id, stock);
+            });
+            return s;
+        });
+
+    case STOCK_TRANSACTION:
+        return state.withMutations(s => {
+            action.payload.forEach(transaction => {
+                if (transaction.fromId === 'bank') {
+                    s = s.update(transaction.stockID, s => s.update('available', count => count - transaction.count));
+                }
+
+                if (transaction.toId === 'bank') {
+                    s = s.update(transaction.stockID, s => s.update('available', count => count + transaction.count));
+                }
+
+                return s;
+            })
+        });
+
     default:
         return state;
     }

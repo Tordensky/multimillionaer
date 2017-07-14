@@ -29,9 +29,21 @@ const StockBackground = styled.div`
     opacity: 0.5;
 `;
 
+export class PlayerStock extends PureComponent {
+    constructor(props) {
+        super(props);
+        this.buyStock = this.buyStock.bind(this);
+        this.sellStock = this.sellStock.bind(this);
+    }
 
+    buyStock() {
+        this.props.onTradeStock(this.props.data.get('stockID'), 1);
+    }
 
-export class Stock extends PureComponent {
+    sellStock() {
+        this.props.onTradeStock(this.props.data.get('stockID'), -1);
+    }
+
     render() {
         const { data } = this.props;
         return (
@@ -39,6 +51,10 @@ export class Stock extends PureComponent {
                 <StockBackground style={{ backgroundColor: data.get('color') }}/>
                 <StockCount>{data.get('count') * 10}%</StockCount>
                 <StockValue>{data.get('value')} kr</StockValue>
+                <div>
+                    <button onClick={this.buyStock}>Buy</button>
+                    <button onClick={this.sellStock}>Sell</button>
+                </div>
             </StockContainer>
         );
     }

@@ -1,12 +1,10 @@
 import { Map, Record, List } from 'immutable';
 import { StocksInitialState } from './stockReducer';
+import { STOCK_TRANSACTION } from '../actions/index';
 
 const Players = ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5', 'Player 6'];
 
-class PlayerRecord extends Record({
-    playerID: '',
-    stocks: List()
-}) {
+class PlayerRecord extends Record({playerID: '', stocks: List()}) {
     viewModel(stockInfo = Map()) {
         const playerStocksViewModel = this.stocks.map(stock => {
             const calculatedValue = stockInfo.get(stock.stockID).calculateStockValue(stock.count);
@@ -48,6 +46,20 @@ function defaultState() {
 
 export function playerReducer(state = defaultState(), action) {
     switch (action.type) {
+    case STOCK_TRANSACTION:
+        return state.withMutations(s => {
+            action.payload.forEach(transaction => {
+                if (s.has(transaction.fromId)) {
+                    s = s.updateIn([transaction.fromId, 'stocks', transaction.stockID, 'count'], c => c - transaction.count )
+                }
+
+                if (s.has(transaction.toId)) {
+                    s = s.updateIn([transaction.toId, 'stocks', transaction.stockID, 'count'], c => c + transaction.count )
+                }
+                return s;
+            })
+        });
+
     default:
         return state;
     }

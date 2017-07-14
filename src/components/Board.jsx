@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
-import { Stock } from './Stock';
+import { PlayerStock } from './PlayerStock';
+import { StockTransactionRecord } from '../actions/index';
 
 const BoardContainer = styled.div`
     width: 100vw;
@@ -40,31 +41,81 @@ const MainStockContainer = styled.div`
     border: solid black 1px;
 `;
 
-function Player({ data }) {
-    const stocks = data.get('stocks').map(stockData => <Stock key={stockData.get('stockID')} data={stockData} />);
+class Player extends PureComponent {
+    constructor(props) {
+        super(props);
+        this.onTradeStock = this.onTradeStock.bind(this);
+    }
 
-    return (
-        <PlayerContainer>
-            <PlayerInfo>
-                {data.get('playerID')}
-            </PlayerInfo>
-            {stocks}
-        </PlayerContainer>
-    );
+    onTradeStock(stockID, count = 0) {
+        this.props.onStockTransaction(new StockTransactionRecord({
+            toId: this.props.data.get('playerID'),
+            fromId: 'bank',
+            stockID,
+            count,
+        }))
+    }
+
+    render() {
+        const { data } = this.props;
+        const stocks = data.get('stocks')
+            .map(stockData => <PlayerStock key={stockData.get('stockID')} data={stockData} onTradeStock={this.onTradeStock} />);
+
+        return (
+            <PlayerContainer>
+                <PlayerInfo>
+                    {data.get('playerID')}
+                </PlayerInfo>
+                {stocks}
+            </PlayerContainer>
+        );
+    }
 }
 
-function Stocks({ data }) {
-    return (
-        <StockContainer>
-            <StockInfo>Aksjer</StockInfo>
-            {data.map(stock =>
-                <MainStockContainer key={stock.get('id')}>
-                    <div>{stock.name}</div>
-                    <div>{stock.getValue()}</div>
-                    <div>{stock.available}</div>
-                </MainStockContainer>)}
-        </StockContainer>
-    );
+
+class MainStocks extends PureComponent {
+    render() {
+        const { data, onChangeStockPrice } = this.props;
+        return (
+            <StockContainer>
+                <StockInfo>Aksjer</StockInfo>
+                {data.map(stock => <MainStock key={stock.get('id')} stock={stock}
+                                              onChangeStockPrice={onChangeStockPrice} />)}
+            </StockContainer>
+        );
+    }
+}
+
+class MainStock extends PureComponent {
+    constructor(props) {
+        super(props);
+        this.onPriceDown = this.onPriceDown.bind(this);
+        this.onPriceUp = this.onPriceUp.bind(this);
+    }
+
+    onPriceUp() {
+        this.props.onChangeStockPrice(this.props.stock.levelUp());
+    }
+
+    onPriceDown() {
+        this.props.onChangeStockPrice(this.props.stock.levelDown());
+    }
+
+    render() {
+        const { stock } = this.props;
+        return (
+            <MainStockContainer key={stock.get('id')}>
+                <div>{stock.name}</div>
+                <div>Value: {stock.getValue()}</div>
+                <div>Available: {stock.available * 10}%</div>
+                <div>Level: {stock.level}</div>
+                <div>
+                    <button onClick={this.onPriceUp}>UP</button>
+                    <button onClick={this.onPriceDown}>DOWN</button>
+                </div>
+            </MainStockContainer>
+        );
+    }
 }
 
 export class Board extends PureComponent {
@@ -75,11 +126,13 @@ export class Board extends PureComponent {
     }
 
     renderPlayers() {
-        return this.props.players.map(playerData => <Player key={playerData.playerID} data={playerData}/>);
+        return this.props.players.map(playerData => <Player key={playerData.playerID} data={playerData}
+                                                            onStockTransaction={this.props.onStockTransaction} />);
     }
 
     renderStocks() {
-        return (<Stocks data={this.props.stocks} />);
+        const { onChangeStockPrice } = this.props;
+        return (<MainStocks data={this.props.stocks} onChangeStockPrice={onChangeStockPrice} />);
     }
 
     render() {
