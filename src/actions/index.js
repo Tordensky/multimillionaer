@@ -20,3 +20,14 @@ export function stockTransaction(...transactions) {
     }
 }
 
+export const EDIT_PLAYER_NAME = 'EDIT_PLAYER_NAME';
+export function editPlayerName(playerID, name) {
+    return {
+        type: EDIT_PLAYER_NAME,
+        payload: {
+            playerID,
+            name
+        },
+    }
+}
+

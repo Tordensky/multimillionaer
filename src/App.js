@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Board } from './components/index';
-import { changeMainStockValues, stockTransaction } from './actions/index';
+import { changeMainStockValues, editPlayerName, stockTransaction } from './actions/index';
 
 
 const AppContainer = styled.div`
@@ -17,7 +17,7 @@ function Historikk({ historikk }) {
 
 class App extends Component {
     render() {
-        const { stocks, players, historikk, onChangeStockPrice, onStockTransaction } = this.props;
+        const { stocks, players, historikk, onChangeStockPrice, onStockTransaction, onEditPlayerName } = this.props;
 
         return (
             <AppContainer>
@@ -26,6 +26,7 @@ class App extends Component {
                     players={players}
                     onChangeStockPrice={onChangeStockPrice}
                     onStockTransaction={onStockTransaction}
+                    onEditPlayerName={onEditPlayerName}
                 />
                 <Historikk historikk={historikk} />
             </AppContainer>
@@ -49,6 +50,9 @@ function mapDispatchToProps(dispatch) {
         onStockTransaction(...transactions) {
             dispatch(stockTransaction(...transactions));
         },
+        onEditPlayerName(playerID, name) {
+            dispatch(editPlayerName(playerID, name));
+        }
     }
 }
 

@@ -1,10 +1,14 @@
 import { Map, Record, List } from 'immutable';
 import { StocksInitialState } from './stockReducer';
-import { STOCK_TRANSACTION } from '../actions/index';
+import { EDIT_PLAYER_NAME, STOCK_TRANSACTION } from '../actions/index';
 
 const Players = ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5', 'Player 6'];
 
-class PlayerRecord extends Record({playerID: '', stocks: List()}) {
+class PlayerRecord extends Record({
+        playerID: '',
+        name: 'test',
+        stocks: List(),
+}) {
     viewModel(stockInfo = Map()) {
         const playerStocksViewModel = this.stocks.map(stock => {
             const calculatedValue = stockInfo.get(stock.stockID).calculateStockValue(stock.count);
@@ -13,6 +17,7 @@ class PlayerRecord extends Record({playerID: '', stocks: List()}) {
 
         return Map({
             playerID: this.playerID,
+            name: this.name,
             stocks: playerStocksViewModel,
         });
     }
@@ -32,7 +37,7 @@ function newPlayer(playerID) {
         stockID: stockID,
         color: stockData.color,
     }));
-    return new PlayerRecord({ playerID, stocks })
+    return new PlayerRecord({ playerID, stocks, name: playerID })
 }
 
 function defaultState() {
@@ -59,6 +64,9 @@ export function playerReducer(state = defaultState(), action) {
                 return s;
             })
         });
+
+    case EDIT_PLAYER_NAME:
+        return state.setIn([action.payload.playerID, 'name'], action.payload.name);
 
     default:
         return state;
