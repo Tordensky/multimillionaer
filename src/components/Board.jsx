@@ -62,10 +62,13 @@ class Player extends PureComponent {
         const stocks = data.get('stocks')
             .map(stockData => <PlayerStock key={stockData.get('stockID')} data={stockData} onTradeStock={this.onTradeStock} />);
 
+        const totalValue = data.get('stocks').reduce((total, stock) => total + stock.get('value', 0), 0);
+
         return (
             <PlayerContainer>
                 <PlayerInfo>
-                    {data.get('playerID')}
+                    <div>{data.get('playerID')}</div>
+                    <div>Totalt: {formaterKroner(totalValue)} kr</div>
                 </PlayerInfo>
                 {stocks}
             </PlayerContainer>
