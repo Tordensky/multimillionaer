@@ -1,14 +1,7 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import { formaterKroner } from '../util/index';
-
-const StockContainer = styled.div`
-    position: relative;
-    width: 100%;
-    margin: 2px;
-    padding: 5px;
-    border: solid black 1px;
-`;
+import { BoardCell } from './Layout';
 
 const StockCount = styled.div`
     font-size: 20px;
@@ -48,7 +41,7 @@ export class PlayerStock extends PureComponent {
     render() {
         const { data } = this.props;
         return (
-            <StockContainer style={{ borderColor: data.get('color') }}>
+            <BoardCell style={{ borderColor: data.get('color') }}>
                 <StockBackground style={{ backgroundColor: data.get('color'), opacity: data.get('count') / 10 }}/>
                 <StockCount>{data.get('count') * 10}%</StockCount>
                 <StockValue>{formaterKroner(data.get('value', 0))} kr</StockValue>
@@ -56,7 +49,7 @@ export class PlayerStock extends PureComponent {
                     <button onClick={this.buyStock}>Kjøp</button>
                     <button onClick={this.sellStock}>Selg</button>
                 </div>
-            </StockContainer>
+            </BoardCell>
         );
     }
 }

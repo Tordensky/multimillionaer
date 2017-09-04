@@ -1,21 +1,8 @@
 import React, { PureComponent } from 'react';
-import styled from 'styled-components';
 import { formaterKroner } from '../util/index';
 import { PlayerStock } from './PlayerStock';
 import { StockTransactionRecord } from '../actions/index';
-
-const PlayerContainer = styled.div`
-    display: flex;
-    justify-content: space-between;
-`;
-
-const PlayerInfo = styled.div`
-    width: 100%;
-    margin: 5px;
-    padding: 10px;
-    border: solid black 1px;
-`;
-
+import { BoardRow, BoardCell } from './Layout';
 
 export class Player extends PureComponent {
     constructor(props) {
@@ -45,13 +32,13 @@ export class Player extends PureComponent {
         const totalValue = data.get('stocks').reduce((total, stock) => total + stock.get('value', 0), 0);
 
         return (
-            <PlayerContainer>
-                <PlayerInfo>
+            <BoardRow>
+                <BoardCell>
                     <input value={data.get('name', '')} onChange={this.onEditName} />
                     <div>Totalt: {formaterKroner(totalValue)} kr</div>
-                </PlayerInfo>
+                </BoardCell>
                 {stocks}
-            </PlayerContainer>
+            </BoardRow>
         );
     }
 }

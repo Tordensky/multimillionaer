@@ -1,36 +1,16 @@
 import React, { PureComponent } from 'react';
-import styled from 'styled-components';
 import { formaterKroner } from '../util/index';
-
-const MainStocksContainer = styled.div`
-    display: flex;
-    justify-content: space-between;
-`;
-
-const StockInfo = styled.div`
-    width: 100%;
-    margin: 5px;
-    padding: 10px;
-    border: solid black 1px;
-`;
-
-const MainStockContainer = styled.div`
-    position: relative;
-    width: 100%;
-    margin: 2px;
-    padding: 5px;
-    border: solid black 1px;
-`;
+import { BoardRow, BoardCell } from './Layout';
 
 export class MainStocks extends PureComponent {
     render() {
         const { data, onChangeStockPrice } = this.props;
         return (
-            <MainStocksContainer>
-                <StockInfo>Aksjer</StockInfo>
+            <BoardRow>
+                <BoardCell>Aksjer</BoardCell>
                 {data.map(stock => <MainStock key={stock.get('id')} stock={stock}
                                               onChangeStockPrice={onChangeStockPrice} />)}
-            </MainStocksContainer>
+            </BoardRow>
         );
     }
 }
@@ -53,7 +33,7 @@ class MainStock extends PureComponent {
     render() {
         const { stock } = this.props;
         return (
-            <MainStockContainer key={stock.get('id')} style={{ backgroundColor: stock.color }}>
+            <BoardCell color={stock.color} key={stock.get('id')}>
                 <div>{stock.name}</div>
                 <div>Pris: {formaterKroner(stock.getValue())} kr</div>
                 <div>Til salgs: {stock.available * 10}%</div>
@@ -62,7 +42,7 @@ class MainStock extends PureComponent {
                     <button onClick={this.onPriceUp}>Øk aksjekurs</button>
                     <button onClick={this.onPriceDown}>Senk aksjekurs</button>
                 </div>
-            </MainStockContainer>
+            </BoardCell>
         );
     }
 }
