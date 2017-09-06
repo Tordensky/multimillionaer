@@ -4,9 +4,12 @@ import { MainStocks } from './MainStock';
 import { Player } from './Player';
 
 const BoardContainer = styled.div`
-    width: 100vw;
+    max-width: 100vw;
     border: solid grey 2px;
-    padding: 5px;
+    padding: 20px;
+    margin: 0 auto;
+    
+    background-color: #edeae1;
 `;
 
 export class Board extends PureComponent {
@@ -28,7 +31,11 @@ export class Board extends PureComponent {
 
     renderStocks() {
         const { onChangeStockPrice } = this.props;
-        return (<MainStocks data={this.props.stocks} onChangeStockPrice={onChangeStockPrice} />);
+        return (
+            <MainStocks
+                data={this.props.stocks}
+                onChangeStockPrice={onChangeStockPrice}
+            />);
     }
 
     render() {

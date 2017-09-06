@@ -60,7 +60,7 @@ export const StocksInitialState = OrderedMap({
     STOCK_1: new StockRecord({
         id: 'STOCK_1',
         level: 3,
-        name: 'Kirkeveien, Frognerveien',
+        name: ['Kirkeveien', 'Frognerveien'],
         available: 10,
         color: '#1091ed',
     }),
@@ -68,7 +68,7 @@ export const StocksInitialState = OrderedMap({
     STOCK_2: new StockRecord({
         id: 'STOCK_2',
         level: 4,
-        name: 'Kongens gate, Dronningens gate, Prinsens gate',
+        name: ['Kongens gate', 'Dronningens gate', 'Prinsens gate'],
         available: 10,
         color: '#eac3c4',
     }),
@@ -76,7 +76,7 @@ export const StocksInitialState = OrderedMap({
     STOCK_3: new StockRecord({
         id: 'STOCK_3',
         level: 5,
-        name: 'Tordenskolds gate, Grensen, Nedre slottsgate',
+        name: ['Tordenskolds gate', 'Grensen', 'Nedre slottsgate'],
         available: 10,
         color: '#b6c203',
     }),
@@ -84,7 +84,7 @@ export const StocksInitialState = OrderedMap({
     STOCK_4: new StockRecord({
         id: 'STOCK_4',
         level: 6,
-        name: 'Drammensveien, Mosseveien, Trondheimsveien',
+        name: ['Drammensveien', 'Mosseveien', 'Trondheimsveien'],
         available: 10,
         color: '#cbc7bd',
     }),
@@ -92,7 +92,7 @@ export const StocksInitialState = OrderedMap({
     STOCK_5: new StockRecord({
         id: 'STOCK_5',
         level: 7,
-        name: 'Gyldenløvs gate',
+        name: ['Gyldenløvs gate'],
         available: 10,
         color: '#eee063',
     }),
@@ -100,7 +100,7 @@ export const StocksInitialState = OrderedMap({
     STOCK_6: new StockRecord({
         id: 'STOCK_6',
         level: 8,
-        name: 'Slemdal, Holmenkollen, Bygdøy',
+        name: ['Slemdal', 'Holmenkollen', 'Bygdøy'],
         available: 10,
         color: '#f96b96',
     }),
@@ -108,7 +108,7 @@ export const StocksInitialState = OrderedMap({
     STOCK_7: new StockRecord({
         id: 'STOCK_7',
         level: 9,
-        name: 'Stortingsgaten, Studenterlunden, Karl Johans gate',
+        name: ['Stortingsgaten', 'Studenterlunden', 'Karl Johans gate'],
         available: 10,
         color: '#edb96e',
     }),
@@ -116,7 +116,7 @@ export const StocksInitialState = OrderedMap({
     STOCK_8: new StockRecord({
         id: 'STOCK_8',
         level: 10,
-        name: 'Sinsen, Vålerengen, Lambertseter',
+        name: ['Sinsen', 'Vålerengen', 'Lambertseter'],
         available: 10,
         color: '#f0d901',
     }),
@@ -124,7 +124,7 @@ export const StocksInitialState = OrderedMap({
     STOCK_9: new StockRecord({
         id: 'STOCK_9',
         level: 11,
-        name: 'Aker Brygge',
+        name: ['Aker Brygge'],
         available: 10,
         color: '#96c1b4',
     }),
@@ -132,7 +132,7 @@ export const StocksInitialState = OrderedMap({
     STOCK_10: new StockRecord({
         id: 'STOCK_10',
         level: 12,
-        name: 'Slottsplassen, Ullevoll Hageby',
+        name: ['Slottsplassen', 'Ullevoll Hageby'],
         available: 10,
         color: '#ec690c',
     }),

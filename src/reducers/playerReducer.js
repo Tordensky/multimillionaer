@@ -11,7 +11,8 @@ class PlayerRecord extends Record({
 }) {
     viewModel(stockInfo = Map()) {
         const playerStocksViewModel = this.stocks.map(stock => {
-            const calculatedValue = stockInfo.get(stock.stockID).calculateStockValue(stock.count);
+            const mainStock = stockInfo.get(stock.stockID);
+            const calculatedValue = mainStock.calculateStockValue(stock.count);
             return stock.set('value', calculatedValue);
         }).toList();
 

@@ -9,6 +9,7 @@ export class Player extends PureComponent {
         super(props);
         this.onTradeStock = this.onTradeStock.bind(this);
         this.onEditName = this.onEditName.bind(this);
+        this.renderStocks = this.renderStocks.bind(this);
     }
 
     onTradeStock(stockID, count = 0) {
@@ -24,11 +25,17 @@ export class Player extends PureComponent {
         this.props.onEditPlayerName(this.props.data.get('playerID'), e.target.value);
     }
 
+    renderStocks() {
+        return this.props.data.get('stocks').map(stockData =>
+            <PlayerStock
+                key={stockData.get('stockID')}
+                data={stockData}
+                onTradeStock={this.onTradeStock}
+            />);
+    }
+
     render() {
         const { data } = this.props;
-        const stocks = data.get('stocks')
-        .map(stockData => <PlayerStock key={stockData.get('stockID')} data={stockData} onTradeStock={this.onTradeStock} />);
-
         const totalValue = data.get('stocks').reduce((total, stock) => total + stock.get('value', 0), 0);
 
         return (
@@ -37,7 +44,7 @@ export class Player extends PureComponent {
                     <input value={data.get('name', '')} onChange={this.onEditName} />
                     <div>Totalt: {formaterKroner(totalValue)} kr</div>
                 </BoardCell>
-                {stocks}
+                {this.renderStocks()}
             </BoardRow>
         );
     }

@@ -1,27 +1,43 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import { formaterKroner } from '../util/index';
-import { BoardCell } from './Layout';
+import {BoardCell, StockBackground, StockInformation} from './Layout';
+
+
 
 const StockCount = styled.div`
-    font-size: 20px;
-    text-align: center;
-`;
-
-const StockValue = styled.div`
     font-size: 14px;
     text-align: center;
 `;
 
-const StockBackground = styled.div`
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    opacity: 0.5;
+const StockValue = styled.div`
+    font-size: 10px;
+    text-align: center;
+    margin-bottom: 30px;
 `;
+
+
+
+const StockMenu = styled.div`
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+
+    display: flex;
+    padding: 2px;
+`;
+
+const StockMenuButton = styled.button`
+    width: 100%;
+    margin-right: 2px;
+    z-index: 12; 
+    
+    &:last-of-type {
+        margin-right: 0;
+    }
+`;
+
 
 export class PlayerStock extends PureComponent {
     constructor(props) {
@@ -42,13 +58,15 @@ export class PlayerStock extends PureComponent {
         const { data } = this.props;
         return (
             <BoardCell style={{ borderColor: data.get('color') }}>
-                <StockBackground style={{ backgroundColor: data.get('color'), opacity: data.get('count') / 10 }}/>
-                <StockCount>{data.get('count') * 10}%</StockCount>
-                <StockValue>{formaterKroner(data.get('value', 0))} kr</StockValue>
-                <div>
-                    <button onClick={this.buyStock}>Kjøp</button>
-                    <button onClick={this.sellStock}>Selg</button>
-                </div>
+                <StockBackground color={data.get('color')} numStocks={data.get('count')} />
+                <StockInformation>
+                    <StockCount>{data.get('count') * 10}%</StockCount>
+                    <StockValue>{formaterKroner(data.get('value', 0))} kr</StockValue>
+                </StockInformation>
+                <StockMenu color={data.get('color')}>
+                    <StockMenuButton onClick={this.sellStock}>Selg</StockMenuButton>
+                    <StockMenuButton onClick={this.buyStock}>Kjøp</StockMenuButton>
+                </StockMenu>
             </BoardCell>
         );
     }
