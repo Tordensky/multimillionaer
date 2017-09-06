@@ -9,7 +9,7 @@ const AppContainer = styled.div`
 `;
 
 function Historikk({ historikk }) {
-    const h = historikk.map((h, idx) => <div key={idx}>{`${h.toId} kjøper ${h.count} aksje av type ${h.stockID} fra ${h.fromId}`}</div>);
+    const h = historikk.reverse().map((h, idx) => <div key={idx}>{`${h.toId} kjøper ${h.count} aksje av type ${h.stockID} fra ${h.fromId}`}</div>);
     return (
         <div>{h}</div>
     );
